@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fund your Future – Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark">⧉</span>
+      <span class="logo-text">Fund your Future</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="analysis.html">Stock Analysis</a>
+      <a href="simulation.html">Simulation Trading</a>
+      <a href="learn.html">Learn</a>
+      <a href="settings.html">Settings</a>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <h1>Your Learning Portfolio</h1>
+    <p>
+      Track your pretend investments and see how they would perform over time.
+      This is for learning only — no real money or trading.
+    </p>
+
+    <section>
+      <h2>Add a Position</h2>
+      <input type="text" id="portfolioTicker" placeholder="Ticker (e.g., AAPL)" />
+      <input type="number" id="portfolioShares" placeholder="Shares" />
+      <input type="date" id="portfolioPurchaseDate" />
+      <input type="number" id="portfolioOriginalPrice" placeholder="Optional purchase price per share" />
+      <button onclick="addToPortfolio()" class="primary-btn">Add to Portfolio</button>
+      <p id="portfolioStatus" class="status-message"></p>
+    </section>
+
+    <section>
+      <h2>Current Portfolio</h2>
+      <table class="portfolio-table">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Original Price</th>
+            <th>Current Price</th>
+            <th>Value</th>
+            <th>Gain / Loss</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="portfolioTableBody"></tbody>
+      </table>
+      <div id="portfolioSummary"></div>
+    </section>
+
+    <section class="card portfolio-chart-card">
+      <div class="sim-chart-header">
+        <div>
+          <h2>Portfolio Ticker Chart</h2>
+          <p>View a selected position with line or candlestick style.</p>
+        </div>
+        <div class="chart-status-pill" id="portfolioChartStatus">Enter a ticker to load chart.</div>
+      </div>
+      <div class="analysis-chart-controls">
+        <input type="text" id="portfolioChartTicker" placeholder="Chart ticker (e.g., AAPL)" />
+        <button type="button" id="portfolioChartLoadBtn" class="secondary-btn">Load Chart</button>
+        <label for="portfolioChartType"><strong>View:</strong></label>
+        <select id="portfolioChartType">
+          <option value="line">Line</option>
+          <option value="candlestick">Candlestick</option>
+        </select>
+      </div>
+      <div class="chart-canvas-shell">
+        <canvas id="portfolioChart" width="720" height="340"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Fund your Future is a student‑run educational project. This platform is
+      for learning only — no real trading or financial advice.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fund your Future – Simulation Trading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark">⧉</span>
+      <span class="logo-text">Fund your Future</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="analysis.html">Stock Analysis</a>
+      <a href="simulation.html" class="active">Simulation Trading</a>
+      <a href="learn.html">Learn</a>
+      <a href="settings.html">Settings</a>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <section class="sim-hero card">
+      <div>
+        <div class="hero-badge">Paper Trading Lab</div>
+        <h1>Simulation Trading</h1>
+        <p>
+          Practice buying and selling stocks using virtual money and real market prices.
+          This is a safe, educational simulation — no real trading or financial risk.
+        </p>
+      </div>
+      <div class="sim-balance">
+        <h2>Your Virtual Balance</h2>
+        <p id="simBalanceDisplay">$0</p>
+      </div>
+    </section>
+
+    <section class="sim-trade card">
+      <h2>Place a Trade</h2>
+      <div class="sim-trade-grid">
+        <input type="text" id="simTicker" placeholder="Ticker (e.g., TSLA)" />
+        <input type="number" id="simShares" placeholder="Shares" />
+        <button onclick="simBuy()" class="primary-btn">Buy</button>
+        <button onclick="simSell()" class="secondary-btn">Sell</button>
+        <button type="button" id="loadChartBtn" class="secondary-btn">Load Chart</button>
+      </div>
+      <p id="simTradeStatus" class="status-message"></p>
+    </section>
+
+    <section class="sim-holdings">
+      <h2>Your Simulation Holdings</h2>
+      <table class="portfolio-table">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Avg Cost</th>
+            <th>Current Price</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="simHoldingsTable"></tbody>
+      </table>
+    </section>
+
+    <section class="sim-history">
+      <h2>Trade History</h2>
+      <table class="portfolio-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="simHistoryTable"></tbody>
+      </table>
+    </section>
+
+    <section class="sim-chart card">
+      <div class="sim-chart-header">
+        <div>
+          <h2>Real Market Chart</h2>
+          <p id="chartModeLabel">Simple price chart</p>
+        </div>
+        <div class="chart-status-pill" id="simChartStatus">Loading chart...</div>
+      </div>
+      <div id="proChartControls" style="display:none; margin-bottom:10px;">
+        <label for="chartTypeSelect"><strong>Chart Type:</strong></label>
+        <select id="chartTypeSelect">
+          <option value="line">Line (Price)</option>
+          <option value="ma">Moving Average</option>
+          <option value="volatility">Volatility Bands</option>
+          <option value="candlestick">Candlestick</option>
+        </select>
+        <div class="sim-slider-controls" id="simSliderControls">
+          <label for="simRangeStart">Start</label>
+          <input type="range" id="simRangeStart" min="0" max="99.5" value="0" step="0.1" />
+          <span id="simRangeStartLabel">0%</span>
+          <label for="simRangeEnd">End</label>
+          <input type="range" id="simRangeEnd" min="0.5" max="100" value="100" step="0.1" />
+          <span id="simRangeEndLabel">100%</span>
+        </div>
+      </div>
+      <div class="chart-toolbar">
+        <button type="button" class="secondary-btn chart-tool-btn active" data-tool="pen">✏️ Draw</button>
+        <button type="button" class="secondary-btn chart-tool-btn" data-tool="clear">🗑️ Clear</button>
+        <button type="button" id="saveShareBtn" class="primary-btn">Save & Share</button>
+      </div>
+      <input type="text" id="annotationNote" placeholder="Add a note for your annotation" />
+      <p id="chartShareStatus" class="status-message"></p>
+      <div class="ticker-search-wrap">
+        <input type="text" id="simTickerSearch" placeholder="Search ticker (e.g., AAPL)" autocomplete="off" />
+        <ul id="tickerSuggestions" class="ticker-suggestions"></ul>
+      </div>
+      <div class="chart-canvas-shell">
+        <canvas id="simChart" width="400" height="260"></canvas>
+        <canvas id="simChartOverlay" width="400" height="260"></canvas>
+      </div>
+    </section>
+
+    <section class="sim-pro" id="simProSection">
+      <h2>Chart Tools</h2>
+      <p>Use the interactive chart features to study patterns and share ideas in your learn feed.</p>
+
+      <ul class="learn-list">
+        <li><strong>Volatility Bands:</strong> Shows how much the price moves.</li>
+        <li><strong>Moving Averages:</strong> Helps visualize long‑term trends.</li>
+        <li><strong>Chart Notes:</strong> Draw directly on the chart and share your view.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Fund your Future is a student‑run educational project. This platform is
+      for learning only — no real trading or financial advice.
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+

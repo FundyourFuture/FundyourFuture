@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fund your Future – Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark">⧉</span>
+      <span class="logo-text">Fund your Future</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="analysis.html">Stock Analysis</a>
+      <a href="simulation.html">Simulation Trading</a>
+      <a href="learn.html">Learn</a>
+      <a href="settings.html" class="active">Settings</a>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <h1>Settings</h1>
+    <p>Customize your experience across the Fund your Future platform.</p>
+
+    <section class="settings-section">
+      <h2>Theme</h2>
+      <p>Switch between light and dark mode.</p>
+      <button onclick="toggleTheme()" class="primary-btn">Toggle Theme</button>
+    </section>
+
+    <section class="settings-section">
+      <h2>Simulation Starting Balance</h2>
+      <p>Choose how much virtual money you want to start with in Simulation Trading.</p>
+
+      <input type="number" id="startingBalanceInput" placeholder="Enter starting balance" />
+      <button onclick="saveStartingBalance()" class="primary-btn">Save Starting Balance</button>
+
+      <p id="startingBalanceStatus" class="status-message"></p>
+    </section>
+
+    <section class="settings-section">
+      <h2>Reset Data</h2>
+      <p>Clear your portfolio, simulation trades, and settings.</p>
+      <button onclick="resetAllData()" class="danger-btn">Reset Everything</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Fund your Future is a student‑run educational project. This platform is
+      for learning only — no real trading or financial advice.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

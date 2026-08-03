@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fund your Future – Stock Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark">⧉</span>
+      <span class="logo-text">Fund your Future</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="analysis.html" class="active">Stock Analysis</a>
+      <a href="simulation.html">Simulation Trading</a>
+      <a href="learn.html">Learn</a>
+      <a href="settings.html">Settings</a>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
+    </nav>
+  </header>
+
+  <main class="page-container analysis-page">
+    <section class="hero analysis-hero">
+      <div class="hero-badge">Market Insights</div>
+      <h1>Stock Analysis</h1>
+      <p>
+        Enter a ticker to view the latest price, company profile, and a simple
+        educational summary that helps you understand what matters most.
+      </p>
+
+      <div class="analysis-input card">
+        <input type="text" id="stockTicker" placeholder="Enter ticker (e.g., AAPL)" />
+        <button onclick="runStockAnalysis()" class="primary-btn">Analyze</button>
+      </div>
+    </section>
+
+    <section class="dashboard-shell card">
+      <div class="dashboard-topbar">
+        <div>
+          <p class="dashboard-label">Market Overview</p>
+          <h2>Trading-style insights</h2>
+        </div>
+        <div class="dashboard-pill">Live data • educational mode</div>
+      </div>
+      <div class="dashboard-visual" aria-hidden="true"></div>
+    </section>
+
+    <section class="card analysis-chart-card">
+      <div class="sim-chart-header">
+        <div>
+          <h2>Price Chart</h2>
+          <p>Toggle view and zoom into a specific period.</p>
+        </div>
+        <div class="chart-status-pill" id="analysisChartStatus">Load a ticker to render chart data.</div>
+      </div>
+      <div class="analysis-chart-controls">
+        <label for="analysisChartType"><strong>View:</strong></label>
+        <select id="analysisChartType">
+          <option value="line">Line</option>
+          <option value="candlestick">Candlestick</option>
+        </select>
+        <div class="analysis-slider-controls" id="analysisSliderControls">
+          <label for="analysisRangeStart">Start</label>
+          <input type="range" id="analysisRangeStart" min="0" max="99.5" value="0" step="0.1" />
+          <span id="analysisRangeStartLabel">0%</span>
+
+          <label for="analysisRangeEnd">End</label>
+          <input type="range" id="analysisRangeEnd" min="0.5" max="100" value="100" step="0.1" />
+          <span id="analysisRangeEndLabel">100%</span>
+        </div>
+      </div>
+      <div class="chart-canvas-shell">
+        <canvas id="analysisChart" width="720" height="340"></canvas>
+      </div>
+    </section>
+
+    <section class="analysis-results-grid">
+      <div class="card analysis-result-card">
+        <h2>Live Snapshot</h2>
+        <div id="analysisResult" class="analysis-result"></div>
+      </div>
+
+      <div class="card analysis-guidance-card">
+        <h2>What to review</h2>
+        <ul class="analysis-list">
+          <li>Current price and company name</li>
+          <li>Industry, exchange, and market cap</li>
+          <li>IPO history and country context</li>
+          <li>Website and company profile basics</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="grid analysis-grid">
+      <div class="card">
+        <h2>Company Profile</h2>
+        <div id="companyProfileBox" class="analysis-box"></div>
+      </div>
+      <div class="card">
+        <h2>Educational Summary</h2>
+        <div id="companySummaryBox" class="analysis-box"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Fund your Future is a student‑run educational project. This platform is
+      for learning only — no real trading or financial advice.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

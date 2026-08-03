@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fund your Future – Learn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark">⧉</span>
+      <span class="logo-text">Fund your Future</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="analysis.html">Stock Analysis</a>
+      <a href="simulation.html">Simulation Trading</a>
+      <a href="learn.html" class="active">Learn</a>
+      <a href="settings.html">Settings</a>
+      <button id="themeToggle" class="theme-toggle">🌙</button>
+    </nav>
+  </header>
+
+  <div class="ticker-banner" aria-label="market ticker">
+    <div class="ticker-track">
+      <span>NASDAQ: +0.48%</span>
+      <span>SPY: +0.21%</span>
+      <span>AAPL: +1.12%</span>
+      <span>TSLA: +0.76%</span>
+      <span>MSFT: +0.54%</span>
+      <span>NVDA: +1.83%</span>
+      <span>AMZN: +0.41%</span>
+      <span>GOOGL: +0.63%</span>
+      <span>NASDAQ: +0.48%</span>
+      <span>SPY: +0.21%</span>
+      <span>AAPL: +1.12%</span>
+      <span>TSLA: +0.76%</span>
+      <span>MSFT: +0.54%</span>
+      <span>NVDA: +1.83%</span>
+      <span>AMZN: +0.41%</span>
+      <span>GOOGL: +0.63%</span>
+    </div>
+  </div>
+
+  <main class="page-container">
+    <section class="hero community-hero">
+      <div class="hero-badge">Personal Progress Feed</div>
+      <h1>Learn</h1>
+      <p>Track your own progress, post screenshots or notes, and learn from the lessons you add over time.</p>
+      <div class="hero-actions">
+        <button type="button" id="openCommunityComposerBtn" class="primary-btn">Post Progress</button>
+        <a href="analysis.html" class="secondary-btn">Analyze a Stock</a>
+        <a href="simulation.html" class="secondary-btn">Open Paper Trading</a>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="stock-line"></div>
+        <div class="stock-line stock-line-delay"></div>
+      </div>
+    </section>
+
+    <section class="community-banner">
+      <p>Use this space as your own learning journal. Add your wins, mistakes, candle notes, and screenshots so you can review them later.</p>
+      <a href="https://mfetcher.gumroad.com/">Click here for more courses</a>
+    </section>
+
+    <section class="card community-section">
+      <div id="communityComposerWrap" class="community-composer-wrap" hidden>
+        <h2>Add Progress</h2>
+        <form class="community-form" id="communityPostForm">
+          <input type="text" id="communityTitle" placeholder="Add a title for your progress" />
+          <textarea id="communityNote" placeholder="Write what you learned, what you noticed, or what you want to remember"></textarea>
+          <label class="upload-label">
+            <span>Upload a screenshot or photo</span>
+            <input type="file" id="communityImageInput" accept="image/*" />
+          </label>
+          <label class="upload-label">
+            <span>Upload a video</span>
+            <input type="file" id="communityVideoInput" accept="video/*" />
+          </label>
+          <div class="community-form-actions">
+            <button type="button" id="communitySubmitBtn" class="primary-btn">Save to Learn Feed</button>
+            <button type="button" id="closeCommunityComposerBtn" class="secondary-btn">Cancel</button>
+          </div>
+          <p id="communityStatus" class="status-message"></p>
+        </form>
+      </div>
+
+      <div class="community-feed-header">
+        <h2>Your Learn Feed</h2>
+        <button type="button" id="inlineCommunityComposerBtn" class="secondary-btn">New Progress Post</button>
+      </div>
+      <div id="communityPostsList" class="community-posts"></div>
+    </section>
+
+    <section class="learn-section card">
+      <h2>Starter Concepts</h2>
+      <ul class="learn-list">
+        <li><strong>Stocks:</strong> Shares of ownership in a company.</li>
+        <li><strong>Risk:</strong> The chance your investment changes in value.</li>
+        <li><strong>Diversification:</strong> Spreading investments to reduce risk.</li>
+        <li><strong>Volatility:</strong> How much a stock’s price moves up or down.</li>
+        <li><strong>Long‑Term Investing:</strong> Holding investments for years.</li>
+      </ul>
+    </section>
+
+    <section class="learn-section card">
+      <h2>About Fund your Future</h2>
+      <p>
+        Fund your Future is a student‑run educational project created to help young
+        learners explore investing concepts safely. Everything on this site is designed
+        to teach financial literacy in a simple, engaging, and beginner‑friendly way.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Fund your Future is a student‑run educational project. This platform is
+      for learning only — no real trading or financial advice.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

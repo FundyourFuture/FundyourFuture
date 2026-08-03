@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Reading candle types",
+    "ticker": "EDU",
+    "note": "Use the candle body to see the open-to-close move. Long bodies usually show stronger momentum than small bodies.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:00:00Z",
+    "imageData": "",
+    "videoData": ""
+  },
+  {
+    "id": 2,
+    "title": "Bullish candlestick idea",
+    "ticker": "AAPL",
+    "note": "A hammer or bullish engulfing candle after a pullback can hint at a possible reversal, but always confirm with volume and trend.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:05:00Z",
+    "imageData": "",
+    "videoData": ""
+  },
+  {
+    "id": 3,
+    "title": "Bearish candle watch",
+    "ticker": "TSLA",
+    "note": "A shooting star or bearish engulfing candle near resistance can warn that momentum may be fading.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:10:00Z",
+    "imageData": "",
+    "videoData": ""
+  },
+  {
+    "id": 4,
+    "title": "Doji candles",
+    "ticker": "SPY",
+    "note": "Doji candles often show indecision. They matter most when they appear after a strong move or near a major support or resistance level.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:15:00Z",
+    "imageData": "",
+    "videoData": ""
+  },
+  {
+    "id": 5,
+    "title": "Upper wick meaning",
+    "ticker": "NVDA",
+    "note": "A long upper wick can mean buyers pushed price up, but sellers stepped in before the close.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:20:00Z",
+    "imageData": "",
+    "videoData": ""
+  },
+  {
+    "id": 6,
+    "title": "Track your own progress",
+    "ticker": "JOURNAL",
+    "note": "Post what you learned from your last trade or chart review. A short note like 'I waited for confirmation' helps you improve over time.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:25:00Z",
+    "imageData": "",
+    "videoData": ""
+  },
+  {
+    "id": 7,
+    "title": "My trade review template",
+    "ticker": "NOTE",
+    "note": "What was my setup? What did I do well? What would I change next time? Use the feed like a personal learning journal.",
+    "author": "Fund your Future",
+    "timestamp": "2026-08-02T12:30:00Z",
+    "imageData": "",
+    "videoData": ""
+  }
+]
