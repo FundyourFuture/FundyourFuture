@@ -138,13 +138,20 @@ function buildApiUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   const candidates = [];
 
-  // Prefer dedicated local API port that may run updated backend independent of static host.
-  candidates.push(`http://127.0.0.1:8010${normalizedPath}`);
-  candidates.push(`http://localhost:8010${normalizedPath}`);
+  // Only try localhost API URLs when the page itself is served from localhost.
+  // On GitHub Pages / mobile devices the Python server is not running, so attempting
+  // these connections causes long TCP timeouts that prevent charts from loading.
+  const hostname = window.location.hostname;
+  const isLocalhost = hostname === "localhost" || hostname === "127.0.0.1";
+  if (isLocalhost) {
+    // Prefer dedicated local API port that may run updated backend independent of static host.
+    candidates.push(`http://127.0.0.1:8010${normalizedPath}`);
+    candidates.push(`http://localhost:8010${normalizedPath}`);
 
-  // Always try the local Python API first so Live Server (e.g. port 5500) can still reach market endpoints.
-  candidates.push(`http://127.0.0.1:8000${normalizedPath}`);
-  candidates.push(`http://localhost:8000${normalizedPath}`);
+    // Always try the local Python API first so Live Server (e.g. port 5500) can still reach market endpoints.
+    candidates.push(`http://127.0.0.1:8000${normalizedPath}`);
+    candidates.push(`http://localhost:8000${normalizedPath}`);
+  }
 
   const origin = window.location.origin && window.location.origin !== "null" ? window.location.origin : "";
   if (origin) candidates.push(`${origin}${normalizedPath}`);
@@ -158,7 +165,14 @@ async function fetchJsonFromApi(path) {
 
   for (const url of urls) {
     try {
-      const response = await fetch(url);
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 2000);
+      let response;
+      try {
+        response = await fetch(url, { signal: controller.signal });
+      } finally {
+        clearTimeout(timer);
+      }
       if (!response.ok) continue;
 
       const data = await response.json();
