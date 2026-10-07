@@ -53,6 +53,7 @@
         <button type="button" id="openCommunityComposerBtn" class="primary-btn">Post Progress</button>
         <a href="analysis.html" class="secondary-btn">Analyze a Stock</a>
         <a href="simulation.html" class="secondary-btn">Open Paper Trading</a>
+        <a href="#pattern-practice" class="secondary-btn">Practice Patterns</a>
       </div>
       <div class="hero-visual" aria-hidden="true">
         <div class="stock-line"></div>
@@ -63,6 +64,25 @@
     <section class="community-banner">
       <p>Use this space as your own learning journal. Add your wins, mistakes, candle notes, and screenshots so you can review them later.</p>
       <a href="https://mfetcher.gumroad.com/">Click here for more courses</a>
+    </section>
+
+    <section id="pattern-practice" class="card pattern-practice-section">
+      <div class="pattern-header">
+        <h2>Pattern Practice</h2>
+        <p>Review the setup, decide if the next move is bullish or bearish, and see what happened after the breakout.</p>
+      </div>
+
+      <div class="pattern-practice-card">
+        <svg id="patternChart" viewBox="0 0 760 260" role="img" aria-label="Candlestick pattern practice chart"></svg>
+        <div id="patternStatus" class="pattern-status" aria-live="polite">Pick a direction to test your read on the setup.</div>
+
+        <div class="pattern-actions">
+          <button type="button" id="patternBuyBtn" class="primary-btn">Buy</button>
+          <button type="button" id="patternSellBtn" class="secondary-btn">Sell</button>
+        </div>
+
+        <button type="button" id="patternNextBtn" class="secondary-btn" hidden>Next Pattern</button>
+      </div>
     </section>
 
     <section class="card community-section">
@@ -86,7 +106,6 @@
           <p id="communityStatus" class="status-message"></p>
         </form>
       </div>
-
       <div class="community-feed-header">
         <h2>Your Learn Feed</h2>
         <button type="button" id="inlineCommunityComposerBtn" class="secondary-btn">New Progress Post</button>

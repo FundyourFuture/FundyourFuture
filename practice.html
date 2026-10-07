@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stock Pattern Trainer - Candlestick</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #chart { width: 100%; max-width: 900px; height: 500px; }
+    button { margin: 5px; padding: 10px 20px; font-size: 16px; }
+    #result { margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h2>Stock Pattern Trainer (Candlestick)</h2>
+<button id="loadPatternBtn">Load Stock Pattern</button>
+
+<div id="chart"></div>
+
+<div id="tradeButtons" style="display:none;">
+    <button id="buyBtn">Buy</button>
+    <button id="sellBtn">Sell</button>
+</div>
+
+<div id="result"></div>
+
+<script>
+// Example candlestick patterns (OHLC data)
+const patterns = [
+    {
+        name: "Bullish Engulfing",
+        ohlc: {
+            open:  [10, 10.5, 10.2, 11, 11.5, 12],
+            high:  [10.6, 10.8, 10.5, 11.3, 11.8, 12.3],
+            low:   [9.8, 10.2, 10.0, 10.8, 11.2, 11.9],
+            close: [10.4, 10.3, 11.0, 11.2, 12.0, 12.2]
+        },
+        correctAction: "Buy"
+    },
+    {
+        name: "Head and Shoulders",
+        ohlc: {
+            open:  [15, 16, 15.5, 17, 15.5, 14],
+            high:  [15.5, 16.5, 16, 17.2, 15.8, 14.2],
+            low:   [14.8, 15.8, 15.2, 16.5, 14.9, 13.8],
+            close: [15.2, 15.9, 15.4, 15.6, 14.5, 14.0]
+        },
+        correctAction: "Sell"
+    }
+];
+
+let currentPattern = null;
+
+// Load a random pattern
+document.getElementById("loadPatternBtn").addEventListener("click", () => {
+    currentPattern = patterns[Math.floor(Math.random() * patterns.length)];
+    plotCandlestick(currentPattern.ohlc, currentPattern.name);
+    document.getElementById("tradeButtons").style.display = "block";
+    document.getElementById("result").innerHTML = "";
+});
+
+// Plot candlestick chart
+function plotCandlestick(ohlc, title) {
+    const trace = {
+        x: Array.from({length: ohlc.open.length}, (_, i) => `Day ${i+1}`),
+        open: ohlc.open,
+        high: ohlc.high,
+        low: ohlc.low,
+        close: ohlc.close,
+        type: 'candlestick',
+        increasing: { line: { color: 'green' } },
+        decreasing: { line: { color: 'red' } }
+    };
+    const layout = {
+        title: title,
+        xaxis: { title: "Time", rangeslider: { visible: false } },
+        yaxis: { title: "Price" }
+    };
+    Plotly.newPlot('chart', [trace], layout);
+}
+
+// Handle Buy/Sell clicks
+document.getElementById("buyBtn").addEventListener("click", () => handleTrade("Buy"));
+document.getElementById("sellBtn").addEventListener("click", () => handleTrade("Sell"));
+
+function handleTrade(choice) {
+    if (!currentPattern) return;
+    const correct = choice === currentPattern.correctAction;
+    document.getElementById("result").innerHTML =
+        `Pattern: <b>${currentPattern.name}</b><br>
+         Your choice: <b>${choice}</b><br>
+         Correct action: <b>${currentPattern.correctAction}</b><br>
+         Result: <span style="color:${correct ? 'green' : 'red'}">${correct ? 'Correct!' : 'Wrong!'}</span>`;
+}
+</script>
+
+</body>
+</html>

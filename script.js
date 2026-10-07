@@ -24,8 +24,195 @@ function toggleTheme() {
   applyTheme();
 }
 
+const patternScenarios = [
+  {
+    label: "Bullish Engulfing",
+    correctAction: "buy",
+    theory: "Bullish Engulfing Pattern",
+    explanation: "A larger green candle swallows the prior red candle, suggesting buyers are taking control and the move may continue upward.",
+    initialCandles: [
+      { open: 101.2, high: 101.9, low: 99.8, close: 100.4 },
+      { open: 100.7, high: 101.3, low: 99.1, close: 99.6 },
+      { open: 99.4, high: 100.6, low: 98.5, close: 99.0 },
+      { open: 98.8, high: 99.5, low: 97.9, close: 98.7 },
+      { open: 98.9, high: 100.2, low: 97.6, close: 101.1 },
+      { open: 100.6, high: 101.8, low: 99.8, close: 101.7 },
+      { open: 101.5, high: 102.4, low: 100.6, close: 102.0 }
+    ],
+    futureCandles: [
+      { open: 102.1, high: 103.6, low: 101.9, close: 103.2 },
+      { open: 103.2, high: 104.1, low: 102.5, close: 103.8 },
+      { open: 103.8, high: 105.0, low: 103.3, close: 104.7 },
+      { open: 104.8, high: 105.6, low: 103.9, close: 105.4 },
+      { open: 105.2, high: 106.1, low: 104.5, close: 105.9 },
+      { open: 105.8, high: 106.8, low: 104.9, close: 106.4 }
+    ]
+  },
+  {
+    label: "Bearish Engulfing",
+    correctAction: "sell",
+    theory: "Bearish Engulfing Pattern",
+    explanation: "A larger red candle overwhelms the prior green candle, suggesting sellers are taking control and prices may fall further.",
+    initialCandles: [
+      { open: 106.5, high: 107.4, low: 105.8, close: 106.9 },
+      { open: 106.9, high: 107.3, low: 106.1, close: 106.8 },
+      { open: 106.8, high: 107.9, low: 106.2, close: 107.6 },
+      { open: 107.6, high: 108.1, low: 106.8, close: 107.9 },
+      { open: 107.8, high: 108.9, low: 106.7, close: 106.4 },
+      { open: 106.1, high: 107.2, low: 105.2, close: 105.9 },
+      { open: 106.0, high: 106.6, low: 104.7, close: 105.0 }
+    ],
+    futureCandles: [
+      { open: 105.1, high: 105.9, low: 103.8, close: 104.2 },
+      { open: 104.3, high: 105.0, low: 102.9, close: 103.1 },
+      { open: 103.1, high: 103.8, low: 101.7, close: 102.2 },
+      { open: 102.2, high: 103.0, low: 101.1, close: 101.4 },
+      { open: 101.5, high: 102.2, low: 100.4, close: 100.8 },
+      { open: 100.7, high: 101.5, low: 99.2, close: 99.7 }
+    ]
+  },
+  {
+    label: "Morning Star",
+    correctAction: "buy",
+    theory: "Morning Star Reversal Pattern",
+    explanation: "The chart prints a down candle, a small indecision candle, and then a strong bullish candle, which often signals a reversal upward.",
+    initialCandles: [
+      { open: 98.1, high: 99.3, low: 97.5, close: 98.9 },
+      { open: 98.8, high: 99.2, low: 97.6, close: 98.1 },
+      { open: 97.9, high: 98.8, low: 96.8, close: 97.0 },
+      { open: 97.1, high: 97.7, low: 96.0, close: 96.8 },
+      { open: 96.7, high: 97.4, low: 95.5, close: 95.9 },
+      { open: 95.8, high: 96.8, low: 95.0, close: 96.6 },
+      { open: 96.5, high: 98.2, low: 96.0, close: 97.9 }
+    ],
+    futureCandles: [
+      { open: 97.8, high: 99.5, low: 97.3, close: 99.2 },
+      { open: 99.1, high: 100.4, low: 98.8, close: 100.1 },
+      { open: 100.0, high: 101.2, low: 99.5, close: 101.0 },
+      { open: 101.0, high: 102.3, low: 100.6, close: 101.9 },
+      { open: 101.8, high: 103.0, low: 101.2, close: 102.7 },
+      { open: 102.6, high: 103.6, low: 101.8, close: 103.2 }
+    ]
+  }
+];
+
+let patternIndex = 0;
+let patternAnswered = false;
+
+function renderPatternChart(candles) {
+  const svg = document.getElementById("patternChart");
+  if (!svg) return;
+
+  const width = 760;
+  const height = 260;
+  const padding = 32;
+  const minPrice = Math.min(...candles.map((candle) => candle.low));
+  const maxPrice = Math.max(...candles.map((candle) => candle.high));
+  const range = Math.max(maxPrice - minPrice, 1);
+  const step = (width - padding * 2) / candles.length;
+  const candleWidth = Math.min(18, step * 0.62);
+
+  const gridLines = Array.from({ length: 5 }, (_, index) => {
+    const y = padding + ((height - padding * 2) / 4) * index;
+    return `<line x1="${padding}" y1="${y}" x2="${width - padding}" y2="${y}" stroke="rgba(148, 163, 184, 0.35)" stroke-width="1" />`;
+  }).join("");
+
+  const candleMarkup = candles.map((candle, index) => {
+    const x = padding + step * index + step / 2;
+    const openY = padding + ((maxPrice - candle.open) / range) * (height - padding * 2);
+    const closeY = padding + ((maxPrice - candle.close) / range) * (height - padding * 2);
+    const highY = padding + ((maxPrice - candle.high) / range) * (height - padding * 2);
+    const lowY = padding + ((maxPrice - candle.low) / range) * (height - padding * 2);
+    const candleTop = Math.min(openY, closeY);
+    const candleHeight = Math.max(Math.abs(closeY - openY), 4);
+    const isBullish = candle.close >= candle.open;
+    const fill = isBullish ? "#22c55e" : "#ef4444";
+
+    return `
+      <line x1="${x}" y1="${highY}" x2="${x}" y2="${lowY}" stroke="${fill}" stroke-width="2" stroke-linecap="round" />
+      <rect x="${x - candleWidth / 2}" y="${candleTop}" width="${candleWidth}" height="${candleHeight}" rx="2" fill="${fill}" />
+    `;
+  }).join("");
+
+  svg.innerHTML = `
+    <g>
+      ${gridLines}
+      ${candleMarkup}
+    </g>
+  `;
+}
+
+function renderPatternPractice() {
+  const scenario = patternScenarios[patternIndex];
+  const candlesToRender = patternAnswered ? [...scenario.initialCandles, ...scenario.futureCandles] : scenario.initialCandles;
+  renderPatternChart(candlesToRender);
+
+  const statusEl = document.getElementById("patternStatus");
+  if (!statusEl) return;
+
+  if (!patternAnswered) {
+    statusEl.textContent = "Pick a direction to test your read on the setup.";
+    statusEl.className = "pattern-status";
+    return;
+  }
+
+  const expectedActionText = scenario.correctAction === "buy" ? "buy" : "sell";
+  const didUserWin = patternAnswered;
+  const winningText = didUserWin ? "You are correct!" : "You are wrong.";
+  const feedbackText = didUserWin ? "That was the right call." : "That was the wrong call.";
+
+  statusEl.innerHTML = `
+    <div>${winningText} ${feedbackText}</div>
+    <div style="margin-top: 6px;">Pattern: <strong>${scenario.theory}</strong></div>
+    <div style="margin-top: 4px;">${scenario.explanation}</div>
+    <div style="margin-top: 6px;">The correct trade was <strong>${expectedActionText}</strong>.</div>
+  `;
+
+  statusEl.className = `pattern-status ${scenario.correctAction === "buy" ? "correct" : "correct"}`;
+}
+
+function checkPatternAnswer(action) {
+  const scenario = patternScenarios[patternIndex];
+  if (patternAnswered) return;
+
+  patternAnswered = true;
+  const isCorrect = action === scenario.correctAction;
+
+  const statusEl = document.getElementById("patternStatus");
+  if (!statusEl) return;
+
+  const resultText = isCorrect ? "You are correct!" : "You are wrong.";
+  const correctActionText = scenario.correctAction === "buy" ? "Buy" : "Sell";
+
+  statusEl.innerHTML = `
+    <div>${resultText}</div>
+    <div style="margin-top: 6px;">Pattern: <strong>${scenario.theory}</strong></div>
+    <div style="margin-top: 4px;">${scenario.explanation}</div>
+    <div style="margin-top: 6px;">The market then continued in the <strong>${correctActionText}</strong> direction, with the next candles confirming the move.</div>
+  `;
+  statusEl.className = `pattern-status ${isCorrect ? "correct" : "wrong"}`;
+
+  document.getElementById("patternNextBtn")?.removeAttribute("hidden");
+  renderPatternChart([...scenario.initialCandles, ...scenario.futureCandles]);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("themeToggle")?.addEventListener("click", toggleTheme);
+
+  const patternBuyBtn = document.getElementById("patternBuyBtn");
+  const patternSellBtn = document.getElementById("patternSellBtn");
+  const patternNextBtn = document.getElementById("patternNextBtn");
+
+  if (patternBuyBtn) patternBuyBtn.addEventListener("click", () => checkPatternAnswer("buy"));
+  if (patternSellBtn) patternSellBtn.addEventListener("click", () => checkPatternAnswer("sell"));
+  if (patternNextBtn) {
+    patternNextBtn.addEventListener("click", () => {
+      patternIndex = (patternIndex + 1) % patternScenarios.length;
+      patternAnswered = false;
+      patternNextBtn.setAttribute("hidden", "hidden");
+      renderPatternPractice();
+    });
+  }
 
   const analyzeButton = document.querySelector(".analysis-input .primary-btn");
   const stockTickerInput = document.getElementById("stockTicker");
@@ -125,6 +312,11 @@ window.addEventListener("DOMContentLoaded", () => {
       renderSimChart();
     });
   }
+
+  if (document.getElementById("patternChart")) {
+    renderPatternPractice();
+  }
+
   loadSeedCommunityPosts();
 });
 
